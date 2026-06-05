@@ -13,102 +13,431 @@
     "November",
     "December"
   ],
+  "regions": [
+    {
+      "key": "west",
+      "label": "West",
+      "states": [
+        "AK",
+        "AZ",
+        "CA",
+        "CO",
+        "HI",
+        "ID",
+        "MT",
+        "NV",
+        "NM",
+        "OR",
+        "UT",
+        "WA",
+        "WY"
+      ]
+    },
+    {
+      "key": "midwest",
+      "label": "Midwest",
+      "states": [
+        "IA",
+        "IL",
+        "IN",
+        "KS",
+        "MI",
+        "MN",
+        "MO",
+        "ND",
+        "NE",
+        "OH",
+        "SD",
+        "WI"
+      ]
+    },
+    {
+      "key": "south",
+      "label": "South",
+      "states": [
+        "AL",
+        "AR",
+        "DC",
+        "DE",
+        "FL",
+        "GA",
+        "KY",
+        "LA",
+        "MD",
+        "MS",
+        "NC",
+        "OK",
+        "SC",
+        "TN",
+        "TX",
+        "VA",
+        "WV"
+      ]
+    },
+    {
+      "key": "northeast",
+      "label": "Northeast",
+      "states": [
+        "CT",
+        "MA",
+        "ME",
+        "NH",
+        "NJ",
+        "NY",
+        "PA",
+        "RI",
+        "VT"
+      ]
+    }
+  ],
   "monthlyData": [
     {
       "month": "January",
-      "shipments": 3840,
-      "onTimeRate": 91.1,
-      "regionalScore": 76.8,
-      "exceptions": 148,
-      "regionalShipments": { "west": 950, "midwest": 860, "south": 1100, "east": 930 }
+      "regions": {
+        "west": {
+          "shipments": 950,
+          "onTimeRate": 91.4,
+          "regionalScore": 77.2,
+          "exceptions": 35
+        },
+        "midwest": {
+          "shipments": 860,
+          "onTimeRate": 91.5,
+          "regionalScore": 77.3,
+          "exceptions": 30
+        },
+        "south": {
+          "shipments": 1100,
+          "onTimeRate": 90.6,
+          "regionalScore": 76.2,
+          "exceptions": 47
+        },
+        "northeast": {
+          "shipments": 930,
+          "onTimeRate": 91.2,
+          "regionalScore": 76.9,
+          "exceptions": 36
+        }
+      }
     },
     {
       "month": "February",
-      "shipments": 4010,
-      "onTimeRate": 91.4,
-      "regionalScore": 77.1,
-      "exceptions": 142,
-      "regionalShipments": { "west": 995, "midwest": 900, "south": 1145, "east": 970 }
+      "regions": {
+        "west": {
+          "shipments": 995,
+          "onTimeRate": 91.7,
+          "regionalScore": 77.5,
+          "exceptions": 34
+        },
+        "midwest": {
+          "shipments": 900,
+          "onTimeRate": 91.8,
+          "regionalScore": 77.6,
+          "exceptions": 29
+        },
+        "south": {
+          "shipments": 1145,
+          "onTimeRate": 90.9,
+          "regionalScore": 76.5,
+          "exceptions": 45
+        },
+        "northeast": {
+          "shipments": 970,
+          "onTimeRate": 91.5,
+          "regionalScore": 77.2,
+          "exceptions": 34
+        }
+      }
     },
     {
       "month": "March",
-      "shipments": 4205,
-      "onTimeRate": 92.0,
-      "regionalScore": 77.9,
-      "exceptions": 134,
-      "regionalShipments": { "west": 1040, "midwest": 940, "south": 1190, "east": 1035 }
+      "regions": {
+        "west": {
+          "shipments": 1040,
+          "onTimeRate": 92.3,
+          "regionalScore": 78.3,
+          "exceptions": 32
+        },
+        "midwest": {
+          "shipments": 940,
+          "onTimeRate": 92.4,
+          "regionalScore": 78.4,
+          "exceptions": 27
+        },
+        "south": {
+          "shipments": 1190,
+          "onTimeRate": 91.5,
+          "regionalScore": 77.3,
+          "exceptions": 42
+        },
+        "northeast": {
+          "shipments": 1035,
+          "onTimeRate": 92.1,
+          "regionalScore": 78,
+          "exceptions": 33
+        }
+      }
     },
     {
       "month": "April",
-      "shipments": 4380,
-      "onTimeRate": 92.6,
-      "regionalScore": 78.4,
-      "exceptions": 126,
-      "regionalShipments": { "west": 1090, "midwest": 975, "south": 1230, "east": 1085 }
+      "regions": {
+        "west": {
+          "shipments": 1090,
+          "onTimeRate": 92.9,
+          "regionalScore": 78.8,
+          "exceptions": 30
+        },
+        "midwest": {
+          "shipments": 975,
+          "onTimeRate": 93,
+          "regionalScore": 78.9,
+          "exceptions": 25
+        },
+        "south": {
+          "shipments": 1230,
+          "onTimeRate": 92.1,
+          "regionalScore": 77.8,
+          "exceptions": 40
+        },
+        "northeast": {
+          "shipments": 1085,
+          "onTimeRate": 92.7,
+          "regionalScore": 78.5,
+          "exceptions": 31
+        }
+      }
     },
     {
       "month": "May",
-      "shipments": 4545,
-      "onTimeRate": 93.0,
-      "regionalScore": 79.0,
-      "exceptions": 119,
-      "regionalShipments": { "west": 1135, "midwest": 1010, "south": 1275, "east": 1125 }
+      "regions": {
+        "west": {
+          "shipments": 1135,
+          "onTimeRate": 93.3,
+          "regionalScore": 79.4,
+          "exceptions": 29
+        },
+        "midwest": {
+          "shipments": 1010,
+          "onTimeRate": 93.4,
+          "regionalScore": 79.5,
+          "exceptions": 24
+        },
+        "south": {
+          "shipments": 1275,
+          "onTimeRate": 92.5,
+          "regionalScore": 78.4,
+          "exceptions": 37
+        },
+        "northeast": {
+          "shipments": 1125,
+          "onTimeRate": 93.1,
+          "regionalScore": 79.1,
+          "exceptions": 29
+        }
+      }
     },
     {
       "month": "June",
-      "shipments": 4700,
-      "onTimeRate": 93.4,
-      "regionalScore": 79.3,
-      "exceptions": 114,
-      "regionalShipments": { "west": 1175, "midwest": 1045, "south": 1315, "east": 1165 }
+      "regions": {
+        "west": {
+          "shipments": 1175,
+          "onTimeRate": 93.7,
+          "regionalScore": 79.7,
+          "exceptions": 27
+        },
+        "midwest": {
+          "shipments": 1045,
+          "onTimeRate": 93.8,
+          "regionalScore": 79.8,
+          "exceptions": 23
+        },
+        "south": {
+          "shipments": 1315,
+          "onTimeRate": 92.9,
+          "regionalScore": 78.7,
+          "exceptions": 36
+        },
+        "northeast": {
+          "shipments": 1165,
+          "onTimeRate": 93.5,
+          "regionalScore": 79.4,
+          "exceptions": 28
+        }
+      }
     },
     {
       "month": "July",
-      "shipments": 4790,
-      "onTimeRate": 93.0,
-      "regionalScore": 79.1,
-      "exceptions": 121,
-      "regionalShipments": { "west": 1200, "midwest": 1060, "south": 1340, "east": 1190 }
+      "regions": {
+        "west": {
+          "shipments": 1200,
+          "onTimeRate": 93.3,
+          "regionalScore": 79.5,
+          "exceptions": 29
+        },
+        "midwest": {
+          "shipments": 1060,
+          "onTimeRate": 93.4,
+          "regionalScore": 79.6,
+          "exceptions": 24
+        },
+        "south": {
+          "shipments": 1340,
+          "onTimeRate": 92.5,
+          "regionalScore": 78.5,
+          "exceptions": 38
+        },
+        "northeast": {
+          "shipments": 1190,
+          "onTimeRate": 93.1,
+          "regionalScore": 79.2,
+          "exceptions": 30
+        }
+      }
     },
     {
       "month": "August",
-      "shipments": 4885,
-      "onTimeRate": 92.8,
-      "regionalScore": 78.8,
-      "exceptions": 127,
-      "regionalShipments": { "west": 1220, "midwest": 1085, "south": 1365, "east": 1215 }
+      "regions": {
+        "west": {
+          "shipments": 1220,
+          "onTimeRate": 93.1,
+          "regionalScore": 79.2,
+          "exceptions": 30
+        },
+        "midwest": {
+          "shipments": 1085,
+          "onTimeRate": 93.2,
+          "regionalScore": 79.3,
+          "exceptions": 25
+        },
+        "south": {
+          "shipments": 1365,
+          "onTimeRate": 92.3,
+          "regionalScore": 78.2,
+          "exceptions": 40
+        },
+        "northeast": {
+          "shipments": 1215,
+          "onTimeRate": 92.9,
+          "regionalScore": 78.9,
+          "exceptions": 32
+        }
+      }
     },
     {
       "month": "September",
-      "shipments": 5005,
-      "onTimeRate": 93.6,
-      "regionalScore": 79.7,
-      "exceptions": 116,
-      "regionalShipments": { "west": 1255, "midwest": 1120, "south": 1405, "east": 1225 }
+      "regions": {
+        "west": {
+          "shipments": 1255,
+          "onTimeRate": 93.9,
+          "regionalScore": 80.1,
+          "exceptions": 28
+        },
+        "midwest": {
+          "shipments": 1120,
+          "onTimeRate": 94,
+          "regionalScore": 80.2,
+          "exceptions": 23
+        },
+        "south": {
+          "shipments": 1405,
+          "onTimeRate": 93.1,
+          "regionalScore": 79.1,
+          "exceptions": 37
+        },
+        "northeast": {
+          "shipments": 1225,
+          "onTimeRate": 93.7,
+          "regionalScore": 79.8,
+          "exceptions": 28
+        }
+      }
     },
     {
       "month": "October",
-      "shipments": 5145,
-      "onTimeRate": 94.0,
-      "regionalScore": 80.0,
-      "exceptions": 110,
-      "regionalShipments": { "west": 1295, "midwest": 1150, "south": 1435, "east": 1265 }
+      "regions": {
+        "west": {
+          "shipments": 1295,
+          "onTimeRate": 94.3,
+          "regionalScore": 80.4,
+          "exceptions": 27
+        },
+        "midwest": {
+          "shipments": 1150,
+          "onTimeRate": 94.4,
+          "regionalScore": 80.5,
+          "exceptions": 22
+        },
+        "south": {
+          "shipments": 1435,
+          "onTimeRate": 93.5,
+          "regionalScore": 79.4,
+          "exceptions": 34
+        },
+        "northeast": {
+          "shipments": 1265,
+          "onTimeRate": 94.1,
+          "regionalScore": 80.1,
+          "exceptions": 27
+        }
+      }
     },
     {
       "month": "November",
-      "shipments": 5315,
-      "onTimeRate": 94.3,
-      "regionalScore": 80.5,
-      "exceptions": 103,
-      "regionalShipments": { "west": 1335, "midwest": 1190, "south": 1480, "east": 1310 }
+      "regions": {
+        "west": {
+          "shipments": 1335,
+          "onTimeRate": 94.6,
+          "regionalScore": 80.9,
+          "exceptions": 25
+        },
+        "midwest": {
+          "shipments": 1190,
+          "onTimeRate": 94.7,
+          "regionalScore": 81,
+          "exceptions": 21
+        },
+        "south": {
+          "shipments": 1480,
+          "onTimeRate": 93.8,
+          "regionalScore": 79.9,
+          "exceptions": 32
+        },
+        "northeast": {
+          "shipments": 1310,
+          "onTimeRate": 94.4,
+          "regionalScore": 80.6,
+          "exceptions": 25
+        }
+      }
     },
     {
       "month": "December",
-      "shipments": 5465,
-      "onTimeRate": 94.8,
-      "regionalScore": 81.3,
-      "exceptions": 97,
-      "regionalShipments": { "west": 1380, "midwest": 1220, "south": 1515, "east": 1350 }
+      "regions": {
+        "west": {
+          "shipments": 1380,
+          "onTimeRate": 95.1,
+          "regionalScore": 81.7,
+          "exceptions": 24
+        },
+        "midwest": {
+          "shipments": 1220,
+          "onTimeRate": 95.2,
+          "regionalScore": 81.8,
+          "exceptions": 19
+        },
+        "south": {
+          "shipments": 1515,
+          "onTimeRate": 94.3,
+          "regionalScore": 80.7,
+          "exceptions": 30
+        },
+        "northeast": {
+          "shipments": 1350,
+          "onTimeRate": 94.9,
+          "regionalScore": 81.4,
+          "exceptions": 24
+        }
+      }
     }
   ]
 }

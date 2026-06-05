@@ -8,31 +8,46 @@ type RegionalShipments = {
   west: number
   midwest: number
   south: number
-  east: number
+  northeast: number
 }
 
-type MonthlyKpi = {
-  month: string
+type RegionKey = keyof RegionalShipments
+
+type RegionMetrics = {
   shipments: number
   onTimeRate: number
   regionalScore: number
   exceptions: number
-  regionalShipments: RegionalShipments
+}
+
+type MonthlyKpi = {
+  month: string
+  regions: Record<RegionKey, RegionMetrics>
+}
+
+type RegionDefinition = {
+  key: RegionKey
+  label: string
+  states: string[]
 }
 
 type MetricsShape = {
   months: string[]
+  regions: RegionDefinition[]
   monthlyData: MonthlyKpi[]
 }
 
 const typedMetrics = metricsJson as MetricsShape
 const MONTHS = typedMetrics.months
+const REGIONS = typedMetrics.regions
 const DATA = typedMetrics.monthlyData
 
 const monthItems = ['All', ...MONTHS]
+const regionItems = ['All', ...REGIONS.map((region) => region.label)]
 
 const currentMonthIndex = new Date().getMonth()
 const selectedMonths = ref<string[]>([MONTHS[currentMonthIndex]])
+const selectedRegions = ref<string[]>(['South'])
 const barCanvas = ref<HTMLCanvasElement | null>(null)
 const trendCanvas = ref<HTMLCanvasElement | null>(null)
 let barChart: Chart<'bar'> | null = null
@@ -50,16 +65,27 @@ const activeMonthIndexes = computed(() => {
     .sort((a, b) => a - b)
 })
 
+const activeRegionKeys = computed<RegionKey[]>(() => {
+  const selected = selectedRegions.value
+  if (selected.length === 0 || selected.includes('All') || selected.length === REGIONS.length) {
+    return REGIONS.map((region) => region.key)
+  }
+
+  return REGIONS.filter((region) => selected.includes(region.label)).map((region) => region.key)
+})
+
 const numberFormatter = new Intl.NumberFormat('en-US')
 
-function aggregate(indexes: number[]) {
-  const shipments = indexes.reduce((sum, index) => sum + DATA[index].shipments, 0)
-  const exceptions = indexes.reduce((sum, index) => sum + DATA[index].exceptions, 0)
+function aggregate(indexes: number[], regionKeys: RegionKey[]) {
+  const cells = indexes.flatMap((index) => regionKeys.map((regionKey) => DATA[index].regions[regionKey]))
+  const shipments = cells.reduce((sum, cell) => sum + cell.shipments, 0)
+  const exceptions = cells.reduce((sum, cell) => sum + cell.exceptions, 0)
   const onTimeRate =
     shipments === 0
       ? 0
-      : indexes.reduce((sum, index) => sum + DATA[index].onTimeRate * DATA[index].shipments, 0) / shipments
-  const regionalScore = indexes.reduce((sum, index) => sum + DATA[index].regionalScore, 0) / indexes.length
+      : cells.reduce((sum, cell) => sum + cell.onTimeRate * cell.shipments, 0) / shipments
+  const regionalScore =
+    shipments === 0 ? 0 : cells.reduce((sum, cell) => sum + cell.regionalScore * cell.shipments, 0) / shipments
 
   return { shipments, onTimeRate, regionalScore, exceptions }
 }
@@ -117,10 +143,11 @@ function trend(delta: number | null, lowerIsBetter = false) {
 }
 
 const metrics = computed(() => {
-  const indexes = activeMonthIndexes.value
-  const current = aggregate(indexes)
-  const previous = previousIndexes(indexes)
-  const baseline = previous ? aggregate(previous) : null
+  const monthIndexes = activeMonthIndexes.value
+  const regionKeys = activeRegionKeys.value
+  const current = aggregate(monthIndexes, regionKeys)
+  const previous = previousIndexes(monthIndexes)
+  const baseline = previous ? aggregate(previous, regionKeys) : null
 
   return [
     {
@@ -150,19 +177,42 @@ function selectedMonthLabels(indexes: number[]) {
   return indexes.map((index) => MONTHS[index])
 }
 
-function selectedShipments(indexes: number[]) {
-  return indexes.map((index) => DATA[index].shipments)
+function selectedShipments(indexes: number[], regionKeys: RegionKey[]) {
+  return indexes.map((index) =>
+    regionKeys.reduce((sum, regionKey) => sum + DATA[index].regions[regionKey].shipments, 0),
+  )
 }
 
-function selectedOnTimeRates(indexes: number[]) {
-  return indexes.map((index) => DATA[index].onTimeRate)
+function selectedOnTimeRates(indexes: number[], regionKeys: RegionKey[]) {
+  return indexes.map((index) => {
+    const cells = regionKeys.map((regionKey) => DATA[index].regions[regionKey])
+    const shipments = cells.reduce((sum, cell) => sum + cell.shipments, 0)
+    if (shipments === 0) {
+      return 0
+    }
+
+    return cells.reduce((sum, cell) => sum + cell.onTimeRate * cell.shipments, 0) / shipments
+  })
+}
+
+function selectedRegionLabels(regionKeys: RegionKey[]) {
+  return regionKeys.map((regionKey) => REGIONS.find((region) => region.key === regionKey)?.label ?? regionKey)
+}
+
+function selectedRegionShipments(indexes: number[], regionKeys: RegionKey[]) {
+  return regionKeys.map((regionKey) =>
+    indexes.reduce((sum, index) => sum + DATA[index].regions[regionKey].shipments, 0),
+  )
 }
 
 function renderCharts() {
-  const indexes = activeMonthIndexes.value
-  const labels = selectedMonthLabels(indexes)
-  const shipmentSeries = selectedShipments(indexes)
-  const onTimeSeries = selectedOnTimeRates(indexes)
+  const monthIndexes = activeMonthIndexes.value
+  const regionKeys = activeRegionKeys.value
+  const monthLabels = selectedMonthLabels(monthIndexes)
+  const shipmentSeries = selectedShipments(monthIndexes, regionKeys)
+  const onTimeSeries = selectedOnTimeRates(monthIndexes, regionKeys)
+  const regionLabels = selectedRegionLabels(regionKeys)
+  const regionShipments = selectedRegionShipments(monthIndexes, regionKeys)
 
   if (barChart) {
     barChart.destroy()
@@ -178,14 +228,13 @@ function renderCharts() {
   barChart = new Chart(barCanvas.value, {
     type: 'bar',
     data: {
-      labels,
+      labels: regionLabels,
       datasets: [
         {
           label: 'Shipment Volume',
-          data: shipmentSeries,
+          data: regionShipments,
           borderRadius: 8,
-          backgroundColor: '#2e6ea6',
-          hoverBackgroundColor: '#1f5a8c',
+          backgroundColor: ['#2e6ea6', '#89b5dc', '#f7931e', '#f4c542'],
         },
       ],
     },
@@ -210,7 +259,7 @@ function renderCharts() {
   trendChart = new Chart(trendCanvas.value, {
     type: 'line',
     data: {
-      labels,
+      labels: monthLabels,
       datasets: [
         {
           label: 'Shipment Volume',
@@ -259,6 +308,10 @@ watch(activeMonthIndexes, () => {
   renderCharts()
 })
 
+watch(activeRegionKeys, () => {
+  renderCharts()
+})
+
 onMounted(() => {
   renderCharts()
 })
@@ -277,22 +330,36 @@ onBeforeUnmount(() => {
   <v-container class="py-8" fluid>
     <v-container class="ff-dashboard pa-0" max-width="1200">
       <v-row class="mb-2" align="center">
-        <v-col cols="12" md="7">
+        <v-col cols="12" md="5">
           <h1 class="text-h4 text-md-h3 font-weight-bold text-primary-darken-2">FastForward Logistics Dashboard</h1>
         </v-col>
 
-        <v-col cols="12" md="5" class="d-flex justify-md-end">
-          <v-select
-            v-model="selectedMonths"
-            :items="monthItems"
-            label="Months"
-            multiple
-            chips
-            closable-chips
-            variant="outlined"
-            density="comfortable"
-            max-width="360"
-          />
+        <v-col cols="12" md="7" class="d-flex justify-md-end">
+          <div class="top-filters">
+            <v-select
+              v-model="selectedMonths"
+              :items="monthItems"
+              label="Months"
+              multiple
+              chips
+              closable-chips
+              variant="outlined"
+              density="comfortable"
+              hide-details
+            />
+
+            <v-select
+              v-model="selectedRegions"
+              :items="regionItems"
+              label="Regions"
+              multiple
+              chips
+              closable-chips
+              variant="outlined"
+              density="comfortable"
+              hide-details
+            />
+          </div>
         </v-col>
       </v-row>
 
@@ -340,6 +407,14 @@ onBeforeUnmount(() => {
   width: 100%;
 }
 
+.top-filters {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 700px;
+}
+
 .chart-surface {
   height: clamp(220px, 36vh, 520px);
   padding: 8px;
@@ -352,6 +427,10 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 600px) {
+  .top-filters {
+    grid-template-columns: 1fr;
+  }
+
   .chart-surface {
     height: clamp(200px, 34vh, 320px);
   }
