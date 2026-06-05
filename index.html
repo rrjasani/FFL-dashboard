@@ -2,49 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FastForward Logistics Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
-    <script src="./app.js" defer></script>
+    <title>ffl-dashboard-vue</title>
   </head>
   <body>
-    <main class="dashboard">
-      <header class="top-bar">
-        <h1 class="dashboard-title">FastForward Logistics Dashboard</h1>
-
-        <div class="filter-wrapper">
-          <button id="monthToggle" class="filter-toggle" aria-expanded="false" aria-controls="monthMenu">
-            Select months
-          </button>
-          <div id="monthMenu" class="month-menu" role="menu" aria-label="Month filter"></div>
-        </div>
-      </header>
-
-      <section class="cards" aria-label="Summary metrics">
-        <article class="metric-card" id="cardShipments"></article>
-        <article class="metric-card" id="cardOnTime"></article>
-        <article class="metric-card" id="cardRegional"></article>
-        <article class="metric-card" id="cardExceptions"></article>
-      </section>
-
-      <section class="charts" aria-label="Performance charts">
-        <article class="chart-card">
-          <h2>Shipment Volume by Region</h2>
-          <canvas id="shipmentBarChart"></canvas>
-        </article>
-
-        <article class="chart-card">
-          <h2>Shipment Volume and On-Time Trend</h2>
-          <canvas id="trendLineChart"></canvas>
-        </article>
-      </section>
-    </main>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
