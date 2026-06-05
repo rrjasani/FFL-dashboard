@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import Chart from 'chart.js/auto'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 type MonthlyKpi = {
   shipments: number
@@ -42,6 +43,10 @@ const DATA: MonthlyKpi[] = [
 
 const currentMonthIndex = new Date().getMonth()
 const selectedMonths = ref<string[]>([MONTHS[currentMonthIndex]])
+const barCanvas = ref<HTMLCanvasElement | null>(null)
+const trendCanvas = ref<HTMLCanvasElement | null>(null)
+let barChart: Chart<'bar'> | null = null
+let trendChart: Chart<'line'> | null = null
 
 const activeMonthIndexes = computed(() => {
   const selected = selectedMonths.value
@@ -150,6 +155,132 @@ const metrics = computed(() => {
     },
   ]
 })
+
+function selectedMonthLabels(indexes: number[]) {
+  return indexes.map((index) => MONTHS[index])
+}
+
+function selectedShipments(indexes: number[]) {
+  return indexes.map((index) => DATA[index].shipments)
+}
+
+function selectedOnTimeRates(indexes: number[]) {
+  return indexes.map((index) => DATA[index].onTimeRate)
+}
+
+function renderCharts() {
+  const indexes = activeMonthIndexes.value
+  const labels = selectedMonthLabels(indexes)
+  const shipmentSeries = selectedShipments(indexes)
+  const onTimeSeries = selectedOnTimeRates(indexes)
+
+  if (barChart) {
+    barChart.destroy()
+  }
+  if (trendChart) {
+    trendChart.destroy()
+  }
+
+  if (!barCanvas.value || !trendCanvas.value) {
+    return
+  }
+
+  barChart = new Chart(barCanvas.value, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Shipment Volume',
+          data: shipmentSeries,
+          borderRadius: 8,
+          backgroundColor: '#2e6ea6',
+          hoverBackgroundColor: '#1f5a8c',
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: '#e4edf5' },
+        },
+        x: {
+          grid: { display: false },
+        },
+      },
+    },
+  })
+
+  trendChart = new Chart(trendCanvas.value, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Shipment Volume',
+          data: shipmentSeries,
+          borderColor: '#2e6ea6',
+          backgroundColor: 'rgba(46, 110, 166, 0.15)',
+          yAxisID: 'y',
+          tension: 0.3,
+          pointRadius: 3,
+        },
+        {
+          label: 'On-Time Delivery %',
+          data: onTimeSeries,
+          borderColor: '#f7931e',
+          backgroundColor: 'rgba(247, 147, 30, 0.12)',
+          yAxisID: 'y1',
+          tension: 0.3,
+          pointRadius: 3,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        y: {
+          position: 'left',
+          beginAtZero: true,
+          grid: { color: '#e4edf5' },
+          title: { display: true, text: 'Shipments' },
+        },
+        y1: {
+          position: 'right',
+          min: 88,
+          max: 96,
+          grid: { drawOnChartArea: false },
+          title: { display: true, text: 'On-Time %' },
+        },
+      },
+    },
+  })
+}
+
+watch(activeMonthIndexes, () => {
+  renderCharts()
+})
+
+onMounted(() => {
+  renderCharts()
+})
+
+onBeforeUnmount(() => {
+  if (barChart) {
+    barChart.destroy()
+  }
+  if (trendChart) {
+    trendChart.destroy()
+  }
+})
 </script>
 
 <template>
@@ -195,10 +326,10 @@ const metrics = computed(() => {
       <v-row dense>
         <v-col cols="12" lg="6">
           <v-card rounded="lg" elevation="2">
-            <v-card-title>Shipment Volume by Region</v-card-title>
+            <v-card-title>Shipment Volume</v-card-title>
             <v-card-text>
-              <v-sheet class="chart-placeholder" rounded="lg" border>
-                Bar chart placeholder
+              <v-sheet class="chart-surface" rounded="lg" border>
+                <canvas ref="barCanvas" />
               </v-sheet>
             </v-card-text>
           </v-card>
@@ -208,8 +339,8 @@ const metrics = computed(() => {
           <v-card rounded="lg" elevation="2">
             <v-card-title>Shipment Volume and On-Time Trend</v-card-title>
             <v-card-text>
-              <v-sheet class="chart-placeholder" rounded="lg" border>
-                Line chart placeholder
+              <v-sheet class="chart-surface" rounded="lg" border>
+                <canvas ref="trendCanvas" />
               </v-sheet>
             </v-card-text>
           </v-card>
@@ -224,17 +355,19 @@ const metrics = computed(() => {
   width: 100%;
 }
 
-.chart-placeholder {
+.chart-surface {
   height: clamp(220px, 36vh, 520px);
-  display: grid;
-  place-items: center;
-  color: #35526f;
-  font-weight: 600;
+  padding: 8px;
   background: linear-gradient(135deg, rgba(46, 110, 166, 0.08), rgba(244, 197, 66, 0.12));
 }
 
+.chart-surface canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 @media (max-width: 600px) {
-  .chart-placeholder {
+  .chart-surface {
     height: clamp(200px, 34vh, 320px);
   }
 }
