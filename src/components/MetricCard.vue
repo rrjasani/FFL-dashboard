@@ -34,7 +34,7 @@ const toneByDirection: Record<TrendDirection, TrendTone> = {
       <v-card-subtitle class="metric-label">{{ props.label }}</v-card-subtitle>
       <v-card-title class="metric-value">{{ props.value }}</v-card-title>
     </v-card-item>
-    <v-card-text class="pt-0 pb-4">
+    <v-card-text v-if="props.trendText" class="pt-0 pb-4">
       <v-chip :color="props.trendTone ?? toneByDirection[props.trendDirection]" size="small" variant="tonal">
         <v-icon start size="16">{{ iconByDirection[props.trendDirection] }}</v-icon>
         {{ props.trendText }}

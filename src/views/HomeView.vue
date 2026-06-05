@@ -128,7 +128,7 @@ function trend(delta: number | null, lowerIsBetter = false) {
     return {
       trendTone: 'secondary' as const,
       trendDirection: 'flat' as const,
-      trendText: 'No prior comparison',
+      trendText: '',
     }
   }
 
