@@ -1,19 +1,19 @@
 :root {
-  --bg-top: #eaf4fb;
-  --bg-bottom: #f8fbfd;
-  --ink: #1f3347;
-  --muted: #5e748a;
+  --bg-top: #f3f4f6;
+  --bg-bottom: #eef1f4;
+  --ink: #1f2937;
+  --muted: #6b7280;
   --card: #ffffff;
-  --line: #d3dfeb;
+  --line: #e5e7eb;
   --blue: #2e6ea6;
   --orange: #f7931e;
   --yellow: #f4c542;
   --green: #2f8f6a;
   --red: #cc4b45;
-  --shadow: 0 10px 26px rgba(27, 56, 83, 0.1);
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
   --chart-height: clamp(220px, 36vh, 520px);
 
-  font-family: 'Open Sans', 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Open Sans', 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
   line-height: 1.45;
   color: var(--ink);
   background: var(--bg-bottom);
@@ -31,9 +31,8 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 10% 10%, rgba(247, 147, 30, 0.14), transparent 34%),
-    radial-gradient(circle at 94% 0%, rgba(46, 110, 166, 0.2), transparent 28%),
-    linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
+    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.85), transparent 32%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
 }
 
 #app {

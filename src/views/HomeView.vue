@@ -327,11 +327,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <v-container class="py-8" fluid>
-    <v-container class="ff-dashboard pa-0" max-width="1200">
-      <v-row class="mb-2" align="center">
+  <v-container class="dashboard-shell py-7" fluid>
+    <v-container class="ff-dashboard pa-0" max-width="1260">
+      <v-row class="mb-4" align="center">
         <v-col cols="12" md="5">
-          <h1 class="text-h4 text-md-h3 font-weight-bold text-primary-darken-2">FastForward Logistics Dashboard</h1>
+          <h1 class="dashboard-title">FastForward Logistics Dashboard</h1>
         </v-col>
 
         <v-col cols="12" md="7" class="d-flex justify-md-end">
@@ -344,8 +344,9 @@ onBeforeUnmount(() => {
               chips
               closable-chips
               variant="outlined"
-              density="comfortable"
+              density="compact"
               hide-details
+              class="filter-select"
             />
 
             <v-select
@@ -356,14 +357,20 @@ onBeforeUnmount(() => {
               chips
               closable-chips
               variant="outlined"
-              density="comfortable"
+              density="compact"
               hide-details
+              class="filter-select"
             />
           </div>
         </v-col>
       </v-row>
 
-      <v-row class="mb-1" dense>
+      <div class="section-label">
+        <span class="section-pill">1</span>
+        <span>Operations Snapshot</span>
+      </div>
+
+      <v-row class="mb-4" dense>
         <v-col v-for="metric in metrics" :key="metric.title" cols="12" sm="6" lg="3">
           <MetricCard
             :label="metric.title"
@@ -375,10 +382,15 @@ onBeforeUnmount(() => {
         </v-col>
       </v-row>
 
+      <div class="section-label">
+        <span class="section-pill">2</span>
+        <span>Performance Trends</span>
+      </div>
+
       <v-row dense>
         <v-col cols="12" lg="6">
-          <v-card rounded="lg" elevation="2">
-            <v-card-title>Shipment Volume</v-card-title>
+          <v-card rounded="lg" elevation="0" class="section-card">
+            <v-card-title class="chart-title">Shipment Volume by Region</v-card-title>
             <v-card-text>
               <v-sheet class="chart-surface" rounded="lg" border>
                 <canvas ref="barCanvas" />
@@ -388,8 +400,8 @@ onBeforeUnmount(() => {
         </v-col>
 
         <v-col cols="12" lg="6">
-          <v-card rounded="lg" elevation="2">
-            <v-card-title>Shipment Volume and On-Time Trend</v-card-title>
+          <v-card rounded="lg" elevation="0" class="section-card">
+            <v-card-title class="chart-title">Shipment Volume and On-Time Trend</v-card-title>
             <v-card-text>
               <v-sheet class="chart-surface" rounded="lg" border>
                 <canvas ref="trendCanvas" />
@@ -407,18 +419,83 @@ onBeforeUnmount(() => {
   width: 100%;
 }
 
+.dashboard-shell {
+  background: #f4f6f8;
+}
+
+.dashboard-title {
+  margin: 0;
+  color: #1f2937;
+  font-size: clamp(1.6rem, 1.35rem + 0.8vw, 2rem);
+  letter-spacing: -0.01em;
+  font-weight: 800;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: #202938;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.section-pill {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #37b37e;
+  color: #ffffff;
+  display: inline-grid;
+  place-items: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
 .top-filters {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
   max-width: 700px;
 }
 
+.filter-select {
+  min-width: 0;
+}
+
+.top-filters :deep(.v-field) {
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.top-filters :deep(.v-field__input) {
+  min-height: 40px;
+}
+
+.top-filters :deep(.v-chip) {
+  font-size: 0.72rem;
+}
+
+.section-card {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.chart-title {
+  color: #374151;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding-top: 14px;
+}
+
 .chart-surface {
-  height: clamp(220px, 36vh, 520px);
+  height: clamp(210px, 34vh, 420px);
   padding: 8px;
-  background: linear-gradient(135deg, rgba(46, 110, 166, 0.08), rgba(244, 197, 66, 0.12));
+  background: #fbfcfd;
+  border-color: #e6e9ee !important;
 }
 
 .chart-surface canvas {
@@ -427,12 +504,17 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 600px) {
+  .section-label {
+    margin-top: 4px;
+    font-size: 1.05rem;
+  }
+
   .top-filters {
     grid-template-columns: 1fr;
   }
 
   .chart-surface {
-    height: clamp(200px, 34vh, 320px);
+    height: clamp(190px, 32vh, 300px);
   }
 }
 </style>

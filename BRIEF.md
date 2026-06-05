@@ -35,3 +35,15 @@ FastForward Logistics is a mid-size freight and supply chain company. Their ops 
 
 ## Data
 - Create a fake dataset as a JSON file (src/data/metrics.json) for the data by month and region.
+
+## Reverse-Engineered Visual Requirements (From Reference Screenshot)
+- Use a light neutral app background (soft gray) with white content cards and subtle 1px borders.
+- Prioritize a dense, information-forward layout with compact vertical rhythm and minimal decorative chrome.
+- Use strong headline typography for the page title and section headers, with medium-to-small body text elsewhere.
+- Style section headings with numbered badge markers to create clear visual hierarchy across analysis blocks.
+- Keep the top filter controls compact: short input heights, tight chip spacing, and aligned in a single right-side group.
+- Use uppercase micro-labels for KPI card subtitles and large, bold numerals for metric values.
+- Use muted grayscale text for labels/metadata and reserve saturated accent colors for trends and chart series only.
+- Apply consistent spacing tokens: ~8-12px inner control spacing, ~12-16px card gaps, and ~24-32px section spacing.
+- Keep chart containers visually quiet: very light panel background, low-contrast borders, and minimal axis/grid noise.
+- Maintain responsive behavior by stacking filters and cards on narrow widths while preserving compact density.

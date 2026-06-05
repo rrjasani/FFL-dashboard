@@ -29,12 +29,12 @@ const toneByDirection: Record<TrendDirection, TrendTone> = {
 </script>
 
 <template>
-  <v-card rounded="lg" elevation="2" class="h-100">
+  <v-card rounded="lg" elevation="0" class="h-100 metric-card">
     <v-card-item>
-      <v-card-subtitle class="font-weight-semibold">{{ props.label }}</v-card-subtitle>
-      <v-card-title class="text-h5 font-weight-bold text-blue-darken-2">{{ props.value }}</v-card-title>
+      <v-card-subtitle class="metric-label">{{ props.label }}</v-card-subtitle>
+      <v-card-title class="metric-value">{{ props.value }}</v-card-title>
     </v-card-item>
-    <v-card-text class="pt-0">
+    <v-card-text class="pt-0 pb-4">
       <v-chip :color="props.trendTone ?? toneByDirection[props.trendDirection]" size="small" variant="tonal">
         <v-icon start size="16">{{ iconByDirection[props.trendDirection] }}</v-icon>
         {{ props.trendText }}
@@ -42,3 +42,26 @@ const toneByDirection: Record<TrendDirection, TrendTone> = {
     </v-card-text>
   </v-card>
 </template>
+
+<style scoped>
+.metric-card {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.metric-label {
+  color: #6b7280;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.metric-value {
+  color: #1f2937;
+  font-size: 1.65rem;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+</style>
