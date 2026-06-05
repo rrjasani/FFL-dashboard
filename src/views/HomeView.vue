@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Chart from 'chart.js/auto'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import MetricCard from '../components/MetricCard.vue'
 
 type MonthlyKpi = {
   shipments: number
@@ -110,9 +111,9 @@ function deltaPercent(current: number, previous: number) {
 function trend(delta: number | null, lowerIsBetter = false) {
   if (delta === null || delta === 0) {
     return {
-      color: 'secondary',
-      icon: 'mdi-minus',
-      text: 'No prior comparison',
+      trendTone: 'secondary' as const,
+      trendDirection: 'flat' as const,
+      trendText: 'No prior comparison',
     }
   }
 
@@ -120,9 +121,9 @@ function trend(delta: number | null, lowerIsBetter = false) {
   const movedUp = delta > 0
 
   return {
-    color: improved ? 'success' : 'error',
-    icon: movedUp ? 'mdi-arrow-up' : 'mdi-arrow-down',
-    text: `${Math.abs(delta).toFixed(1)}% vs previous period`,
+    trendTone: improved ? ('success' as const) : ('error' as const),
+    trendDirection: movedUp ? ('up' as const) : ('down' as const),
+    trendText: `${Math.abs(delta).toFixed(1)}% vs previous period`,
   }
 }
 
@@ -308,18 +309,13 @@ onBeforeUnmount(() => {
 
       <v-row class="mb-1" dense>
         <v-col v-for="metric in metrics" :key="metric.title" cols="12" sm="6" lg="3">
-          <v-card rounded="lg" elevation="2" class="h-100">
-            <v-card-item>
-              <v-card-subtitle class="font-weight-semibold">{{ metric.title }}</v-card-subtitle>
-              <v-card-title class="text-h5 font-weight-bold text-blue-darken-2">{{ metric.value }}</v-card-title>
-            </v-card-item>
-            <v-card-text class="pt-0">
-              <v-chip :color="metric.color" size="small" variant="tonal">
-                <v-icon start size="16">{{ metric.icon }}</v-icon>
-                {{ metric.text }}
-              </v-chip>
-            </v-card-text>
-          </v-card>
+          <MetricCard
+            :label="metric.title"
+            :value="metric.value"
+            :trend-text="metric.trendText"
+            :trend-direction="metric.trendDirection"
+            :trend-tone="metric.trendTone"
+          />
         </v-col>
       </v-row>
 
