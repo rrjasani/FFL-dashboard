@@ -9,6 +9,7 @@ FastForward Logistics is a mid-size freight and supply chain company. Their ops 
 
 - The title of the dashboard should be at the top left aligned.
 - A date picker should be on the same line as the title but right aligned.
+- A region picker next to the date picker should be on the same line as the title but right aligned.
 - A row of 4 metric cards depicting the values for the 4 metrics that are being measured for the current date's month
     - Cards should show a small up/down arrow and color indicating change from previous month, the title of the metric and the value.
 - Below the cards include a row of 2 charts, side-by-side
@@ -17,6 +18,10 @@ FastForward Logistics is a mid-size freight and supply chain company. Their ops 
 - The date picker should default to showing ALL months, but should have options for each month with the ability to select multiple at once.
     - It should default to the current date's month
     - When a specific month is selected, all cards and charts should filter to that month. When "All" is selected, show the full year.
+- The region picker should default to showing ALL regions, but should have options for each region with the ability to select multiple at once.
+    - It should default to the region that includes Texas
+    - When a specific region is selected, all cards and charts should filter to that month. When "All" is selected, show all regions.
+    - Group the states of the USA into 4 distinct regions.
 
 ### Interactions
 - Date picker in the top bar filters EVERYTHING to a specific month or set of months
@@ -27,3 +32,6 @@ FastForward Logistics is a mid-size freight and supply chain company. Their ops 
 - Use a blue and gray color pallette with bright orange, yellow accent colors
 - Mobile responsive - cards stack on small screens
 - Typography should be clean and a san-serif font like Open Sans or something similar.
+
+## Data
+- Create a fake dataset as a JSON file (src/data/metrics.json) for the data by month and region.

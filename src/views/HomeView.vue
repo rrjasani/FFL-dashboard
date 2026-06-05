@@ -2,45 +2,34 @@
 import Chart from 'chart.js/auto'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import MetricCard from '../components/MetricCard.vue'
+import metricsJson from '../data/metrics.json'
+
+type RegionalShipments = {
+  west: number
+  midwest: number
+  south: number
+  east: number
+}
 
 type MonthlyKpi = {
+  month: string
   shipments: number
   onTimeRate: number
   regionalScore: number
   exceptions: number
+  regionalShipments: RegionalShipments
 }
 
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
+type MetricsShape = {
+  months: string[]
+  monthlyData: MonthlyKpi[]
+}
+
+const typedMetrics = metricsJson as MetricsShape
+const MONTHS = typedMetrics.months
+const DATA = typedMetrics.monthlyData
 
 const monthItems = ['All', ...MONTHS]
-
-const DATA: MonthlyKpi[] = [
-  { shipments: 3820, onTimeRate: 90.8, regionalScore: 76.4, exceptions: 142 },
-  { shipments: 4015, onTimeRate: 91.2, regionalScore: 77.0, exceptions: 138 },
-  { shipments: 4190, onTimeRate: 92.1, regionalScore: 77.7, exceptions: 129 },
-  { shipments: 4360, onTimeRate: 92.7, regionalScore: 78.1, exceptions: 124 },
-  { shipments: 4510, onTimeRate: 93.1, regionalScore: 78.8, exceptions: 118 },
-  { shipments: 4685, onTimeRate: 93.5, regionalScore: 79.2, exceptions: 114 },
-  { shipments: 4750, onTimeRate: 93.2, regionalScore: 79.0, exceptions: 121 },
-  { shipments: 4860, onTimeRate: 92.9, regionalScore: 78.6, exceptions: 128 },
-  { shipments: 4975, onTimeRate: 93.8, regionalScore: 79.5, exceptions: 117 },
-  { shipments: 5105, onTimeRate: 94.0, regionalScore: 79.9, exceptions: 110 },
-  { shipments: 5280, onTimeRate: 94.2, regionalScore: 80.3, exceptions: 104 },
-  { shipments: 5410, onTimeRate: 94.7, regionalScore: 81.1, exceptions: 99 },
-]
 
 const currentMonthIndex = new Date().getMonth()
 const selectedMonths = ref<string[]>([MONTHS[currentMonthIndex]])

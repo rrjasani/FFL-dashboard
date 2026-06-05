@@ -1,0 +1,114 @@
+{
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "monthlyData": [
+    {
+      "month": "January",
+      "shipments": 3840,
+      "onTimeRate": 91.1,
+      "regionalScore": 76.8,
+      "exceptions": 148,
+      "regionalShipments": { "west": 950, "midwest": 860, "south": 1100, "east": 930 }
+    },
+    {
+      "month": "February",
+      "shipments": 4010,
+      "onTimeRate": 91.4,
+      "regionalScore": 77.1,
+      "exceptions": 142,
+      "regionalShipments": { "west": 995, "midwest": 900, "south": 1145, "east": 970 }
+    },
+    {
+      "month": "March",
+      "shipments": 4205,
+      "onTimeRate": 92.0,
+      "regionalScore": 77.9,
+      "exceptions": 134,
+      "regionalShipments": { "west": 1040, "midwest": 940, "south": 1190, "east": 1035 }
+    },
+    {
+      "month": "April",
+      "shipments": 4380,
+      "onTimeRate": 92.6,
+      "regionalScore": 78.4,
+      "exceptions": 126,
+      "regionalShipments": { "west": 1090, "midwest": 975, "south": 1230, "east": 1085 }
+    },
+    {
+      "month": "May",
+      "shipments": 4545,
+      "onTimeRate": 93.0,
+      "regionalScore": 79.0,
+      "exceptions": 119,
+      "regionalShipments": { "west": 1135, "midwest": 1010, "south": 1275, "east": 1125 }
+    },
+    {
+      "month": "June",
+      "shipments": 4700,
+      "onTimeRate": 93.4,
+      "regionalScore": 79.3,
+      "exceptions": 114,
+      "regionalShipments": { "west": 1175, "midwest": 1045, "south": 1315, "east": 1165 }
+    },
+    {
+      "month": "July",
+      "shipments": 4790,
+      "onTimeRate": 93.0,
+      "regionalScore": 79.1,
+      "exceptions": 121,
+      "regionalShipments": { "west": 1200, "midwest": 1060, "south": 1340, "east": 1190 }
+    },
+    {
+      "month": "August",
+      "shipments": 4885,
+      "onTimeRate": 92.8,
+      "regionalScore": 78.8,
+      "exceptions": 127,
+      "regionalShipments": { "west": 1220, "midwest": 1085, "south": 1365, "east": 1215 }
+    },
+    {
+      "month": "September",
+      "shipments": 5005,
+      "onTimeRate": 93.6,
+      "regionalScore": 79.7,
+      "exceptions": 116,
+      "regionalShipments": { "west": 1255, "midwest": 1120, "south": 1405, "east": 1225 }
+    },
+    {
+      "month": "October",
+      "shipments": 5145,
+      "onTimeRate": 94.0,
+      "regionalScore": 80.0,
+      "exceptions": 110,
+      "regionalShipments": { "west": 1295, "midwest": 1150, "south": 1435, "east": 1265 }
+    },
+    {
+      "month": "November",
+      "shipments": 5315,
+      "onTimeRate": 94.3,
+      "regionalScore": 80.5,
+      "exceptions": 103,
+      "regionalShipments": { "west": 1335, "midwest": 1190, "south": 1480, "east": 1310 }
+    },
+    {
+      "month": "December",
+      "shipments": 5465,
+      "onTimeRate": 94.8,
+      "regionalScore": 81.3,
+      "exceptions": 97,
+      "regionalShipments": { "west": 1380, "midwest": 1220, "south": 1515, "east": 1350 }
+    }
+  ]
+}
