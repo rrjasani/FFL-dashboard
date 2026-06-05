@@ -1,64 +1,136 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const monthItems = [
+  'All',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+
+const selectedMonths = ref(['All'])
+
+const metrics = [
+  {
+    title: 'Shipment Volume',
+    value: '48,610',
+    trendText: '4.1% vs previous month',
+    trendUp: true,
+  },
+  {
+    title: 'On-Time Delivery Rate',
+    value: '93.8%',
+    trendText: '1.3% vs previous month',
+    trendUp: true,
+  },
+  {
+    title: 'Regional Performance',
+    value: '79.5',
+    trendText: '0.8% vs previous month',
+    trendUp: true,
+  },
+  {
+    title: 'Open Exceptions',
+    value: '117',
+    trendText: '2.0% vs previous month',
+    trendUp: false,
+  },
+]
+</script>
+
 <template>
-  <main class="dashboard">
-    <header class="top-bar">
-      <h1 class="dashboard-title">FastForward Logistics Dashboard</h1>
+  <v-container class="py-8" fluid>
+    <v-container class="ff-dashboard pa-0" max-width="1200">
+      <v-row class="mb-2" align="center">
+        <v-col cols="12" md="7">
+          <h1 class="text-h4 text-md-h3 font-weight-bold text-primary-darken-2">FastForward Logistics Dashboard</h1>
+        </v-col>
 
-      <label class="month-filter" for="monthSelect">
-        <span>Months</span>
-        <select id="monthSelect" multiple aria-label="Filter months">
-          <option selected>All</option>
-          <option>January</option>
-          <option>February</option>
-          <option>March</option>
-          <option>April</option>
-          <option>May</option>
-          <option>June</option>
-          <option>July</option>
-          <option>August</option>
-          <option>September</option>
-          <option>October</option>
-          <option>November</option>
-          <option>December</option>
-        </select>
-      </label>
-    </header>
+        <v-col cols="12" md="5" class="d-flex justify-md-end">
+          <v-select
+            v-model="selectedMonths"
+            :items="monthItems"
+            label="Months"
+            multiple
+            chips
+            closable-chips
+            variant="outlined"
+            density="comfortable"
+            max-width="360"
+          />
+        </v-col>
+      </v-row>
 
-    <section class="cards" aria-label="KPI cards">
-      <article class="metric-card">
-        <p class="metric-title">Shipment Volume</p>
-        <p class="metric-value">48,610</p>
-        <p class="metric-change positive">▲ 4.1% vs previous month</p>
-      </article>
+      <v-row class="mb-1" dense>
+        <v-col v-for="metric in metrics" :key="metric.title" cols="12" sm="6" lg="3">
+          <v-card rounded="lg" elevation="2" class="h-100">
+            <v-card-item>
+              <v-card-subtitle class="font-weight-semibold">{{ metric.title }}</v-card-subtitle>
+              <v-card-title class="text-h5 font-weight-bold text-blue-darken-2">{{ metric.value }}</v-card-title>
+            </v-card-item>
+            <v-card-text class="pt-0">
+              <v-chip :color="metric.trendUp ? 'success' : 'error'" size="small" variant="tonal">
+                <v-icon start size="16">{{ metric.trendUp ? 'mdi-arrow-up' : 'mdi-arrow-down' }}</v-icon>
+                {{ metric.trendText }}
+              </v-chip>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
 
-      <article class="metric-card">
-        <p class="metric-title">On-Time Delivery Rate</p>
-        <p class="metric-value">93.8%</p>
-        <p class="metric-change positive">▲ 1.3% vs previous month</p>
-      </article>
+      <v-row dense>
+        <v-col cols="12" lg="6">
+          <v-card rounded="lg" elevation="2">
+            <v-card-title>Shipment Volume by Region</v-card-title>
+            <v-card-text>
+              <v-sheet class="chart-placeholder" rounded="lg" border>
+                Bar chart placeholder
+              </v-sheet>
+            </v-card-text>
+          </v-card>
+        </v-col>
 
-      <article class="metric-card">
-        <p class="metric-title">Regional Performance</p>
-        <p class="metric-value">79.5</p>
-        <p class="metric-change positive">▲ 0.8% vs previous month</p>
-      </article>
-
-      <article class="metric-card">
-        <p class="metric-title">Open Exceptions</p>
-        <p class="metric-value">117</p>
-        <p class="metric-change negative">▲ 2.0% vs previous month</p>
-      </article>
-    </section>
-
-    <section class="charts" aria-label="Chart panels">
-      <article class="chart-card">
-        <h2>Shipment Volume by Region</h2>
-        <div class="chart-placeholder">Bar chart placeholder</div>
-      </article>
-
-      <article class="chart-card">
-        <h2>Shipment Volume and On-Time Trend</h2>
-        <div class="chart-placeholder">Line chart placeholder</div>
-      </article>
-    </section>
-  </main>
+        <v-col cols="12" lg="6">
+          <v-card rounded="lg" elevation="2">
+            <v-card-title>Shipment Volume and On-Time Trend</v-card-title>
+            <v-card-text>
+              <v-sheet class="chart-placeholder" rounded="lg" border>
+                Line chart placeholder
+              </v-sheet>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-container>
 </template>
+
+<style scoped>
+.ff-dashboard {
+  width: 100%;
+}
+
+.chart-placeholder {
+  height: clamp(220px, 36vh, 520px);
+  display: grid;
+  place-items: center;
+  color: #35526f;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(46, 110, 166, 0.08), rgba(244, 197, 66, 0.12));
+}
+
+@media (max-width: 600px) {
+  .chart-placeholder {
+    height: clamp(200px, 34vh, 320px);
+  }
+}
+</style>
