@@ -335,32 +335,42 @@ onBeforeUnmount(() => {
         </v-col>
 
         <v-col cols="12" md="7" class="d-flex justify-md-end">
-          <div class="top-filters">
-            <v-select
-              v-model="selectedMonths"
-              :items="monthItems"
-              label="Months"
-              multiple
-              chips
-              closable-chips
-              variant="outlined"
-              density="compact"
-              hide-details
-              class="filter-select"
-            />
+          <div class="top-filters" role="group" aria-label="Dashboard filters">
+            <div class="filter-block">
+              <p class="filter-label">Months</p>
+              <v-select
+                v-model="selectedMonths"
+                :items="monthItems"
+                placeholder="Select months"
+                aria-label="Months"
+                multiple
+                chips
+                closable-chips
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="filter-select"
+                menu-icon="mdi-chevron-down"
+              />
+            </div>
 
-            <v-select
-              v-model="selectedRegions"
-              :items="regionItems"
-              label="Regions"
-              multiple
-              chips
-              closable-chips
-              variant="outlined"
-              density="compact"
-              hide-details
-              class="filter-select"
-            />
+            <div class="filter-block">
+              <p class="filter-label">Regions</p>
+              <v-select
+                v-model="selectedRegions"
+                :items="regionItems"
+                placeholder="Select regions"
+                aria-label="Regions"
+                multiple
+                chips
+                closable-chips
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="filter-select"
+                menu-icon="mdi-chevron-down"
+              />
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -421,6 +431,7 @@ onBeforeUnmount(() => {
 
 .dashboard-shell {
   background: #f4f6f8;
+  min-height: 100vh;
 }
 
 .dashboard-title {
@@ -459,6 +470,23 @@ onBeforeUnmount(() => {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   max-width: 700px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #eef2f6;
+  border: 1px solid #d9e0e8;
+}
+
+.filter-block {
+  min-width: 0;
+}
+
+.filter-label {
+  margin: 0 0 6px;
+  color: #4b5563;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .filter-select {
@@ -468,14 +496,21 @@ onBeforeUnmount(() => {
 .top-filters :deep(.v-field) {
   border-radius: 8px;
   background: #ffffff;
+  border: 1px solid #cfd8e3;
+  box-shadow: 0 1px 1px rgba(16, 24, 40, 0.06);
 }
 
 .top-filters :deep(.v-field__input) {
   min-height: 40px;
+  color: #111827;
 }
 
 .top-filters :deep(.v-chip) {
   font-size: 0.72rem;
+}
+
+.top-filters :deep(.v-field__append-inner) {
+  color: #374151;
 }
 
 .section-card {
